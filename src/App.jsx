@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage/HomePage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import PdfPage from "./pages/PdfPage/PdfPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 
@@ -14,15 +14,13 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-
       <Routes>
         <Route path="/" element={<HomePage />} />
-
         <Route
           path="/profile"
           element={
             <IsPrivate>
-              <ProfilePage />
+              <PdfPage />
             </IsPrivate>
           }
         />
