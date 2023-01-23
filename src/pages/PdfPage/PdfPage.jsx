@@ -6,20 +6,24 @@ export default function PdfPage() {
 
 
   const handleFileUpload = (event) => {
-    setSelectedFiles(event);
+    setSelectedFiles(event.target.files);
+    console.log(event.target.files)
+    console.log(typeof selectedFiles);
   }
 
   const uploadFile = async() => {
     const data = new FormData();
 
-    selectedFiles.forEach(file => data.append("file", file))
-    try {
-      await uploadPdf.sendData(data)
-    } catch (error) {
-      console.log(error)
+    for (let i = 0; i < selectedFiles.length; i++) {
+      data.append("file", selectedFiles[i])
     }
-  }
 
+    try {
+        await uploadPdf.sendData(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
   return (
     <>
     <div>PdfPage</div>
@@ -28,6 +32,6 @@ export default function PdfPage() {
     <button onClick={uploadFile}>Upload</button>
     </div>
     </>
-    
+
   )
 }
