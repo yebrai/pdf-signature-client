@@ -24,10 +24,6 @@ class ExampleService {
     return this.api.post('/api/upload', requestBody);
   }
 
-  // GET /api/examples
-  getAll = async () => {
-    return this.api.get('/api/examples');
-  }
 
 }
 
