@@ -51,7 +51,7 @@ export default function PdfPage() {
         return (
           <div>
           <br />
-          <a key={index} href={`http://localhost:5005/api/upload/download/${file.fileName}`}>{file.url}</a>
+          <a key={index} href={`http://localhost:5005/api/upload/download/${file.fileName}`} download={`${file.fileName}`}>{file.url}</a>
           </div>)
       })}
 
