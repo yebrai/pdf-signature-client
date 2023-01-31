@@ -5,7 +5,13 @@ import uploadPdf from './../../services/uploadPdf.service'
 export default function PdfPage() {
   const [selectedFiles, setSelectedFiles] = useState(null)
   const [pdfs, setPdfs] = useState([]);
-  const [loader, setLoader] = useState(false)
+  const [isFileReceived, setIsFileReceived] = useState(false)
+  const [receptionMessage, setReceptionMessage] = useState("")
+
+  useEffect(() => {
+    getData()
+  }, [])
+  
 
   const handleFileUpload = (event) => {
     setSelectedFiles(event.target.files);
@@ -14,12 +20,9 @@ export default function PdfPage() {
   const getData = async() => {
     try {
       const response = await axios.get('http://localhost:5005/api/upload/files')
-      
-      console.log(pdfs)
       setPdfs(response.data)
-
     } catch (error) {
-      console.log(error)
+      console.log("getdata error",error)
     } 
   }
 
@@ -28,14 +31,16 @@ export default function PdfPage() {
     for (let i = 0; i < selectedFiles.length; i++) {
       data.append("file", selectedFiles[i])
     }
-
     try {
-        const response = await uploadPdf.sendData(data);
-        // setPdfs(response.data)
-        // console.log(response.data)
+        const receptionMessage = await uploadPdf.sendData(data);
+        setIsFileReceived(true)
+        setReceptionMessage(receptionMessage.data.message)
+
+        console.log("receptionMessage",receptionMessage)
         
     } catch (error) {
-        console.log(error);
+        setReceptionMessage(error.message)
+        console.log("error uplosd", error);
     }
 }
   return (
@@ -43,6 +48,7 @@ export default function PdfPage() {
     <div>PdfPage</div>
     <div>
     <input type="file" onChange={handleFileUpload} multiple/>
+    {isFileReceived && <p>{receptionMessage.message}</p>}
     <button onClick={uploadFile}>Upload</button>
     <div>
 
