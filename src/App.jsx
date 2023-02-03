@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 function App() {
   return (
@@ -24,6 +25,15 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route
+          path="/changepassword"
+          element={
+            <IsPrivate>
+              <ChangePassword />
+            </IsPrivate>
+          }
+        />
+
 
         <Route
           path="/signup"

@@ -34,6 +34,12 @@ class AuthService {
     // same as
     // return axios.post("http://localhost:5005/auth/verify");
   };
+
+  changePassword = (requestBody) => {
+    return this.api.patch("/auth/changepassword", requestBody);
+    // same as
+    // return axios.post("http://localhost:5005/auth/changePassword");
+  };
 }
 const authService = new AuthService();
 
