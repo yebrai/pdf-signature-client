@@ -1,10 +1,11 @@
 import "./SignupPage.css";
+import "../Form.css";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 import { useForm } from "./../../hooks/useForm";
 
 function SignupPage() {
-  const {form, handleChange, errorMessage, setErrorMessage} = useForm()
+  const {form, handleChange, errorMessage, setErrorMessage, placeholderWarningIfEmpty, inputWarningStyleIfEmpty} = useForm()
 
   const navigate = useNavigate();
 
@@ -27,14 +28,16 @@ function SignupPage() {
 
       <form onSubmit={handleSignupSubmit}>
         <label>Usuario:</label>
-        <input type="text" name="username" value={form.username} onChange={handleChange} />
+        <input className={inputWarningStyleIfEmpty( form.username)} type="text" name="username" value={form.username} onChange={handleChange} placeholder={placeholderWarningIfEmpty(form.password, "Usuario")}/>
 
         <label>Contraseña:</label>
         <input
+        className={inputWarningStyleIfEmpty( form.password)}
           type="password"
           name="password"
           value={form.password}
           onChange={handleChange}
+          placeholder={placeholderWarningIfEmpty(form.password, "Contraseña")}
         />
 
         <button type="submit">Sign Up</button>

@@ -1,0 +1,12 @@
+.inputFormRedBorder {
+    border-color: red;
+}
+
+
+.inputForm {
+    border-color: gray;
+}
+
+.error-message{
+    color:red
+}

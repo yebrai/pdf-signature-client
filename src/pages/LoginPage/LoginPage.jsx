@@ -1,4 +1,5 @@
 import "./LoginPage.css";
+import "../Form.css";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
@@ -6,7 +7,7 @@ import authService from "../../services/auth.service";
 import { useForm } from "./../../hooks/useForm";
 
 function LoginPage() {
-  const {form, handleChange, errorMessage, setErrorMessage} = useForm()
+  const {form, handleChange, errorMessage, setErrorMessage, placeholderWarningIfEmpty, inputWarningStyleIfEmpty} = useForm()
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -28,13 +29,15 @@ function LoginPage() {
       <h1>Login</h1>
       <form onSubmit={handleLoginSubmit}>
         <label>Usuario:</label>
-        <input type="username" name="username" value={form.username} onChange={handleChange} />
+        <input className={inputWarningStyleIfEmpty( form.username)} type="username" name="username" value={form.username} onChange={handleChange} placeholder={placeholderWarningIfEmpty(form.oldPassword, "Usuario")}/>
         <label>Password:</label>
         <input
+        className={inputWarningStyleIfEmpty(form.password)}
           type="password"
           name="password"
           value={form.password}
           onChange={handleChange}
+          placeholder={placeholderWarningIfEmpty(form.password, "Contraseña")}
         />
         <button type="submit">Login</button>
       </form>

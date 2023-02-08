@@ -9,12 +9,24 @@ export const useForm = () => {
       setForm({ ...form, [name]: value });
     };
 
+    const showErrorMessage = () => errorMessage;
+
+    const placeholderWarningIfEmpty = (inputValue, correctString) => {
+      return (errorMessage === "Por favor, rellene todos los campos" && !inputValue) ? errorMessage : correctString
+    }
+
+    const inputWarningStyleIfEmpty = ( inputValue) => {
+      return (errorMessage === "Por favor, rellene todos los campos" && !inputValue) ?  "inputFormRedBorder" : "inputForm" 
+    }
+
     return {
       form,
       handleChange,
       errorMessage,
-      setErrorMessage
-
+      setErrorMessage,
+      placeholderWarningIfEmpty,
+      showErrorMessage,
+      inputWarningStyleIfEmpty
     }
 
 }
