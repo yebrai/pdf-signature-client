@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import uploadPdf from "./../../services/uploadPdf.service";
+import Loading from "../../components/Loading/Loading"
 
 export default function PdfPage() {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [pdfs, setPdfs] = useState([]);
   const [isFileReceived, setIsFileReceived] = useState(false);
   const [receptionMessage, setReceptionMessage] = useState("");
+  const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
     getData();
@@ -17,35 +19,40 @@ export default function PdfPage() {
   };
 
   const getData = async () => {
-    console.log("getdataaa");
     try {
       const response = await axios.get(
         "http://localhost:5005/api/upload/files"
       );
       setPdfs(response.data);
-      console.log("getdata ", pdfs);
+      setIsFetching(false)
     } catch (error) {
-      console.log("getdata error", error);
       setReceptionMessage(error)
+      setIsFetching(false)
     }
   };
 
   const uploadFile = async () => {
+    setIsFetching(true)
     const data = new FormData();
     for (let i = 0; i < selectedFiles.length; i++) {
       data.append("file", selectedFiles[i]);
     }
     try {
-      const receptionMessage = await uploadPdf.sendData(data);
-      setIsFileReceived(receptionMessage.data.success);
-      setReceptionMessage(receptionMessage.data.message);
-      receptionMessage.data.success && (await getData());
+      const response = await uploadPdf.sendData(data);
+      setIsFileReceived(true);
+      setReceptionMessage(response.data.message);
+      response.data.success && (await getData())  ;
     } catch (error) {
-      setReceptionMessage(error.message);
+      setIsFileReceived(true);
+      setReceptionMessage(error.response.data.message);
+      setIsFetching(false)
     }
   };
   return (
     <>
+      {isFetching ? <Loading/> :
+      
+      <>
       <div>PdfPage</div>
       <div>
         <input type="file" onChange={handleFileUpload} multiple />
@@ -74,6 +81,8 @@ export default function PdfPage() {
         </div>
         <div></div>
       </div>
+      </>
+      }
     </>
   );
 }
