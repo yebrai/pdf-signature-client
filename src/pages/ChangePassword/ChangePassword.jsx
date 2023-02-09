@@ -20,7 +20,7 @@ function ChangePassword() {
           const response = await authService.changePassword(form)
             //quitar el response si no lo usamos
             authenticateUser();
-            navigate("/login");
+            navigate("/login"); //antes dar al usuario el mensaje de exito
         } catch (error) {
           setErrorMessage(error.response.data.message)
         }
